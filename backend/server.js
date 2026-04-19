@@ -4,8 +4,8 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const { rateLimit } = require("express-rate-limit");
 
-const rootRoutes = require("./routes");
 const connectDB = require("./config/db");
+const rootRoutes = require("./routes");
 
 dotenv.config();
 
@@ -26,17 +26,10 @@ app.use(
 
 app.use("/", rootRoutes);
 
-const startServer = async () => {
-  try {
-    await connectDB();
+connectDB().catch((error) => {
+  console.warn("MongoDB unavailable, continuing with in-memory storage:", error.message);
+});
 
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error(`Failed to start server: ${error.message}`);
-    process.exit(1);
-  }
-};
-
-startServer();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

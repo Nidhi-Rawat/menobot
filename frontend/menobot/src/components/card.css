@@ -1,0 +1,717 @@
+/* Shared Card Component Styles */
+
+.card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(249, 168, 212, 0.08));
+  border: 1px solid rgba(236, 72, 153, 0.15);
+  border-radius: 16px;
+  padding: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 16px rgba(236, 72, 153, 0.1),
+    0 4px 8px rgba(139, 92, 246, 0.08),
+    0 2px 4px rgba(217, 70, 239, 0.06),
+    inset 0 0 15px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  width: 100%;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ec4899, #d946ef, #9333ea, #7c3aed);
+  border-radius: 16px 16px 0 0;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 12px 24px rgba(236, 72, 153, 0.12),
+    0 6px 12px rgba(139, 92, 246, 0.1),
+    0 3px 6px rgba(217, 70, 239, 0.08),
+    inset 0 0 15px rgba(255, 255, 255, 0.6);
+  border-color: rgba(236, 72, 153, 0.25);
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card.greeting {
+  min-height: 200px;
+}
+
+.card.cycle {
+  min-height: 280px;
+}
+
+.card.pain {
+  min-height: 280px;
+}
+
+.card.meal {
+  min-height: 280px;
+}
+
+/* Greeting Card Specific Styles */
+.greeting-card {
+  min-height: 180px;
+  max-height: 200px;
+}
+
+/* Cycle Info Card Specific Styles */
+.cycle-info-card {
+  min-height: 220px;
+  max-height: 260px;
+}
+
+/* Pain Level Card Specific Styles */
+.pain-level-card {
+  min-height: 220px;
+  max-height: 260px;
+}
+
+/* Meal Suggestions Card Specific Styles */
+.meal-suggestions-card {
+  min-height: 220px;
+  max-height: 260px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.card-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #d946ef;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #9333ea;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  opacity: 0.8;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Phase Badges */
+.phase-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.phase-badge.follicular {
+  background: linear-gradient(45deg, #10b981, #34d399);
+  color: white;
+}
+
+.phase-badge.ovulatory {
+  background: linear-gradient(45deg, #3b82f6, #60a5fa);
+  color: white;
+}
+
+.phase-badge.luteal {
+  background: linear-gradient(45deg, #f59e0b, #fbbf24);
+  color: white;
+}
+
+.phase-badge.menstrual {
+  background: linear-gradient(45deg, #ef4444, #f87171);
+  color: white;
+}
+
+.phase-badge.unknown {
+  background: linear-gradient(45deg, #6b7280, #9ca3af);
+  color: white;
+}
+
+/* Greeting Card Specific */
+.greeting-card {
+  background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+  border-color: #f9a8d4;
+}
+
+.greeting-card::before {
+  background: linear-gradient(90deg, #ec4899, #db2777);
+}
+
+.greeting-message {
+  color: #831843;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+/* Cycle Info Card Specific */
+.cycle-info-card {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fbbf24;
+}
+
+.cycle-info-card::before {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.cycle-details {
+  display: grid;
+  gap: 1rem;
+}
+
+.cycle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.cycle-item label {
+  font-size: 0.9rem;
+  color: #78350f;
+  font-weight: 500;
+}
+
+.cycle-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.cycle-progress {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(251, 191, 36, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d946ef, #9333ea);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #92400e;
+  min-width: 60px;
+}
+
+/* Pain Level Card Specific */
+.pain-level-card {
+  background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+  border-color: #a78bfa;
+}
+
+.pain-level-card::before {
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+.pain-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.pain-badge.high {
+  background: linear-gradient(45deg, #ef4444, #f87171);
+  color: white;
+}
+
+.pain-badge.medium {
+  background: linear-gradient(45deg, #f59e0b, #fbbf24);
+  color: white;
+}
+
+.pain-badge.low {
+  background: linear-gradient(45deg, #10b981, #34d399);
+  color: white;
+}
+
+.pain-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.overall-pain, .wellness-score {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+}
+
+.score-value, .wellness-value {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #8b5cf6, #d946ef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.score-max {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.pain-label, .wellness-label {
+  font-size: 0.9rem;
+  color: #4c1d95;
+  margin-top: 0.25rem;
+}
+
+.symptoms-breakdown h4 {
+  font-size: 1rem;
+  color: #4c1d95;
+  margin-bottom: 1rem;
+}
+
+.symptoms-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.symptom-item {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.symptom-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.symptom-name {
+  font-size: 0.9rem;
+  color: #4c1d95;
+  font-weight: 500;
+}
+
+.symptom-score {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b21a8;
+}
+
+.symptom-bar {
+  height: 6px;
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.symptom-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b5cf6, #d946ef);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.pain-category {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-label {
+  font-size: 0.9rem;
+  color: #4c1d95;
+  font-weight: 500;
+}
+
+.category-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b21a8;
+}
+
+/* Meal Suggestions Card Specific */
+.meal-suggestions-card {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-color: #6ee7b7;
+}
+
+.meal-suggestions-card::before {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.meal-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #10b981, #34d399);
+  color: white;
+}
+
+.meal-plan h4 {
+  color: #065f46;
+  margin-bottom: 1rem;
+}
+
+.meal-list h5 {
+  font-size: 0.95rem;
+  color: #065f46;
+  margin-bottom: 0.75rem;
+}
+
+.meals {
+  list-style: none;
+  padding: 0;
+}
+
+.meal-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  color: #047857;
+  font-size: 0.9rem;
+}
+
+.meal-icon {
+  font-size: 1.2rem;
+}
+
+.nutrition-tips h5 {
+  font-size: 0.95rem;
+  color: #065f46;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.tips-text {
+  color: #047857;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.additional-focus {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.focus-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #065f46;
+}
+
+.focus-icon {
+  font-size: 1rem;
+}
+
+/* Chatbot Card Specific */
+.chatbot-card {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fbbf24;
+}
+
+.chatbot-card::before {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.chat-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.message {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  color: white;
+}
+
+.message.bot {
+  align-self: flex-start;
+  background: white;
+  color: #4c1d95;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.message.loading {
+  align-self: flex-start;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  background: #8b5cf6;
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-10px); }
+}
+
+.chat-suggestions {
+  margin-bottom: 1rem;
+}
+
+.suggestions-label {
+  font-size: 0.85rem;
+  color: #92400e;
+  margin-bottom: 0.5rem;
+}
+
+.suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.suggestion-btn {
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 16px;
+  font-size: 0.8rem;
+  color: #92400e;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suggestion-btn:hover {
+  background: rgba(251, 191, 36, 0.2);
+  transform: translateY(-1px);
+}
+
+.suggestion-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-input-container {
+  margin-top: auto;
+}
+
+.chat-input {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.7);
+  transition: border-color 0.3s ease;
+}
+
+.chat-input input:focus {
+  outline: none;
+  border-color: #f59e0b;
+}
+
+.chat-input input:disabled {
+  opacity: 0.5;
+}
+
+.send-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.send-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card {
+    padding: 1rem;
+  }
+  
+  .pain-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .additional-focus {
+    grid-template-columns: 1fr;
+  }
+  
+  .suggestions-list {
+    flex-direction: column;
+  }
+  
+  .suggestion-btn {
+    text-align: left;
+  }
+}

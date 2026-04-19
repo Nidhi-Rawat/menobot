@@ -22,6 +22,14 @@ function predictCycle(cycles, lastPeriodDate) {
   const predictedDate = new Date(baseDate);
   predictedDate.setDate(predictedDate.getDate() + roundedCycleLength);
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  predictedDate.setHours(0, 0, 0, 0);
+
+  while (predictedDate <= today) {
+    predictedDate.setDate(predictedDate.getDate() + roundedCycleLength);
+  }
+
   return predictedDate;
 }
 

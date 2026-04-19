@@ -1,3 +1,7 @@
+const calculatePain = require("../utils/calculatePain");
+const detectPhase = require("../utils/detectPhase");
+const { getLatestHealthEntry } = require("./dataController");
+
 const getPainLabel = (painScore) => {
   if (painScore >= 7) return "high";
   if (painScore >= 4) return "medium";
@@ -6,28 +10,41 @@ const getPainLabel = (painScore) => {
 
 const createChatResponse = async (req, res) => {
   try {
-    const { phase, painScore, mood } = req.body;
-    const parsedPainScore = Number(painScore);
-    const parsedMood = Number(mood);
+    const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
 
-    if (typeof phase !== "string" || !Number.isFinite(parsedPainScore) || !Number.isFinite(parsedMood)) {
+    if (!message) {
+      return res.status(400).json({ message: "message is required" });
+    }
+
+    const userData = await getLatestHealthEntry();
+
+    if (!userData) {
       return res.status(400).json({
-        message: "phase (string), painScore (number), and mood (number) are required",
+        message: "No health data found. Please save your latest symptoms before using chat.",
       });
     }
 
-    if (parsedPainScore < 0 || parsedPainScore > 10 || parsedMood < 0 || parsedMood > 10) {
-      return res.status(400).json({
-        message: "painScore and mood must be between 0 and 10",
-      });
-    }
+    const { painScore, category } = calculatePain({
+      cramps: userData.cramps,
+      mood: userData.mood,
+      fatigue: userData.fatigue,
+      flow: userData.flow,
+    });
+
+    const phase = detectPhase(userData.lastPeriod, userData.cycles);
 
     if (!process.env.GROQ_API_KEY) {
       return res.status(500).json({ message: "GROQ_API_KEY is not configured" });
     }
 
-    const painLabel = getPainLabel(parsedPainScore);
-    const prompt = `User is in ${phase.toLowerCase()} phase with ${painLabel} pain. Respond in a soft tone.`;
+    const painLabel = getPainLabel(painScore);
+    const prompt = [
+      `The user is currently in the ${phase.toLowerCase()} phase.`,
+      `Their calculated pain score is ${painScore}/10, which is ${painLabel} (${category.toLowerCase()}).`,
+      `Latest symptom ratings: cramps ${userData.cramps}/5, mood ${userData.mood}/5, fatigue ${userData.fatigue}/5, flow ${userData.flow}/5.`,
+      `The user's question is: ${message}`,
+      "Respond in a soft, supportive, practical tone and personalize the answer using this health data when it is relevant.",
+    ].join(" ");
 
     const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -41,11 +58,11 @@ const createChatResponse = async (req, res) => {
           {
             role: "system",
             content:
-              "You are a kind period wellness assistant. Keep responses short, gentle, and practical.",
+              "You are a kind period wellness assistant. Keep responses short, gentle, practical, and clearly tailored to the user's latest health data.",
           },
           {
             role: "user",
-            content: `${prompt} Mood score is ${parsedMood}/10.`,
+            content: prompt,
           },
         ],
       }),
@@ -64,6 +81,11 @@ const createChatResponse = async (req, res) => {
     return res.status(200).json({
       prompt,
       response: responseText,
+      context: {
+        painScore,
+        phase,
+        category,
+      },
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });

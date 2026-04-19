@@ -1,9 +1,34 @@
-const UserHealth = require("../models/UserHealth");
 const calculatePain = require("../utils/calculatePain");
 const predictCycle = require("../utils/predictCycle");
 const detectPhase = require("../utils/detectPhase");
+const UserHealth = require("../models/UserHealth");
+const mongoose = require("mongoose");
 
-const isValidScore = (value) => Number.isFinite(value) && value >= 0 && value <= 10;
+const isValidScore = (value) => Number.isFinite(value) && value >= 1 && value <= 5;
+let latestHealthEntry = null;
+
+const getLatestHealthEntry = async () => {
+  if (latestHealthEntry) {
+    return latestHealthEntry;
+  }
+
+  if (mongoose.connection.readyState !== 1) {
+    return null;
+  }
+
+  const latestEntry = await UserHealth.findOne().sort({ createdAt: -1 }).lean();
+
+  if (!latestEntry) {
+    return null;
+  }
+
+  latestHealthEntry = {
+    ...latestEntry,
+    updatedAt: latestEntry.createdAt || latestEntry.updatedAt || new Date().toISOString(),
+  };
+
+  return latestHealthEntry;
+};
 
 const createHealthData = async (req, res) => {
   try {
@@ -26,7 +51,7 @@ const createHealthData = async (req, res) => {
 
     if (![parsedCramps, parsedMood, parsedFatigue, parsedFlow].every(isValidScore)) {
       return res.status(400).json({
-        message: "cramps, mood, fatigue, and flow must be numbers between 0 and 10",
+        message: "cramps, mood, fatigue, and flow must be numbers between 1 and 5",
       });
     }
 
@@ -37,9 +62,8 @@ const createHealthData = async (req, res) => {
       flow: parsedFlow,
     });
     const nextPeriod = predictCycle(cycles, lastPeriod);
-    const phase = detectPhase(lastPeriod);
-
-    await UserHealth.create({
+    const phase = detectPhase(lastPeriod, cycles);
+    const responsePayload = {
       lastPeriod,
       cycles,
       cramps: parsedCramps,
@@ -50,14 +74,18 @@ const createHealthData = async (req, res) => {
       category,
       nextPeriod,
       phase,
-    });
+      updatedAt: new Date().toISOString(),
+    };
 
-    return res.status(201).json({
-      painScore,
-      category,
-      nextPeriod,
-      phase,
-    });
+    latestHealthEntry = responsePayload;
+
+    if (mongoose.connection.readyState === 1) {
+      await UserHealth.create(responsePayload);
+    }
+
+    console.log("createHealthData response:", responsePayload);
+
+    return res.status(201).json(responsePayload);
   } catch (error) {
     return res.status(400).json({ message: error.message || "Invalid input data" });
   }
@@ -65,11 +93,13 @@ const createHealthData = async (req, res) => {
 
 const getHealthData = async (req, res) => {
   try {
-    const entries = await UserHealth.find().sort({ createdAt: -1 });
+    const latestEntry = await getLatestHealthEntry();
+    const entries = latestEntry ? [latestEntry] : [];
+    console.log("getHealthData response:", entries[0] || null);
     return res.status(200).json(entries);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-module.exports = { createHealthData, getHealthData };
+module.exports = { createHealthData, getHealthData, getLatestHealthEntry };

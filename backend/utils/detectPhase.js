@@ -1,25 +1,46 @@
-function detectPhase(lastPeriodDate) {
+function detectPhase(lastPeriodDate, cycles = []) {
   const startDate = new Date(lastPeriodDate);
   if (Number.isNaN(startDate.getTime())) {
     throw new Error("lastPeriodDate must be a valid date");
   }
 
+  const normalizedCycles = Array.isArray(cycles)
+    ? cycles.map((value) => Number(value)).filter((value) => Number.isFinite(value))
+    : [];
+
+  const averageCycleLength = normalizedCycles.length
+    ? Math.round(
+        normalizedCycles.reduce((total, value) => total + value, 0) / normalizedCycles.length
+      )
+    : 28;
+
   const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  startDate.setHours(0, 0, 0, 0);
+
   const msPerDay = 1000 * 60 * 60 * 24;
   const daysSinceLastPeriod = Math.floor((now - startDate) / msPerDay);
 
-  const cycleDay = ((daysSinceLastPeriod % 28) + 28) % 28 + 1;
+  if (daysSinceLastPeriod < 0) {
+    throw new Error("lastPeriodDate cannot be in the future");
+  }
 
-  if (cycleDay >= 1 && cycleDay <= 5) {
+  const cycleDay = daysSinceLastPeriod + 1;
+
+  if (cycleDay <= 5) {
     return "Menstrual";
   }
-  if (cycleDay >= 6 && cycleDay <= 14) {
+  if (cycleDay <= 14) {
     return "Follicular";
   }
-  if (cycleDay >= 15 && cycleDay <= 17) {
+  if (cycleDay <= 17) {
     return "Ovulation";
   }
-  return "Luteal";
+  if (cycleDay <= averageCycleLength) {
+    return "Luteal";
+  }
+
+  return "Late";
 }
 
 module.exports = detectPhase;
