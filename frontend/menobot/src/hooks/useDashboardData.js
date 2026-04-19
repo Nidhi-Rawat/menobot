@@ -1,29 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getCachedHealthData, getDashboardData } from '../services/api'
-
-function normalizeDashboardData(payload) {
-  const pickLatestEntry = (items) => {
-    if (!Array.isArray(items) || items.length === 0) {
-      return null
-    }
-
-    return items[0] || null
-  }
-
-  if (Array.isArray(payload)) {
-    return pickLatestEntry(payload)
-  }
-
-  if (payload?.data && Array.isArray(payload.data)) {
-    return pickLatestEntry(payload.data)
-  }
-
-  if (payload?.data && typeof payload.data === 'object') {
-    return payload.data
-  }
-
-  return payload || null
-}
+import { getCachedHealthData, getLatestHealthData } from '../services/api'
 
 export function useDashboardData() {
   const [data, setData] = useState(null)
@@ -38,18 +14,16 @@ export function useDashboardData() {
       setError('')
 
       try {
-        const response = await getDashboardData()
-        console.log('Dashboard API response:', response)
-
+        const response = await getLatestHealthData()
         if (isMounted) {
-          setData(normalizeDashboardData(response))
+          setData(response)
         }
       } catch (loadError) {
         if (isMounted) {
           const cachedData = getCachedHealthData()
 
           if (cachedData) {
-            setData(normalizeDashboardData(cachedData))
+            setData(cachedData)
             setError('')
           } else {
             setError(loadError.message || 'Failed to load dashboard data.')

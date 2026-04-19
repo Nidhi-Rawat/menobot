@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { sendChatMessage } from '../services/api'
+import { getCachedHealthData, getLatestHealthData, sendChatMessage } from '../services/api'
 
 const initialMessages = [
   {
@@ -30,6 +30,15 @@ export function useChat() {
   const [isSending, setIsSending] = useState(false)
   const [error, setError] = useState('')
 
+  async function getHealthContext() {
+    const cached = getCachedHealthData()
+    if (cached) {
+      return cached
+    }
+
+    return getLatestHealthData()
+  }
+
   async function submitMessage(content) {
     const userMessage = {
       id: Date.now(),
@@ -42,7 +51,15 @@ export function useChat() {
     setError('')
 
     try {
-      const response = await sendChatMessage(content)
+      const latestHealth = await getHealthContext()
+      const response = await sendChatMessage(content, {
+        phase: latestHealth?.phase,
+        painScore: latestHealth?.painScore,
+        mood: latestHealth?.mood,
+        fatigue: latestHealth?.fatigue,
+        flow: latestHealth?.flow,
+        cramps: latestHealth?.cramps,
+      })
       const reply = getAssistantReply(response)
 
       setMessages((current) => [

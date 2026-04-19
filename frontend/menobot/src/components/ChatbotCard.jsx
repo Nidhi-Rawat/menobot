@@ -28,21 +28,21 @@ function ChatbotCard({ fullPage = false }) {
   }
 
   const containerClass = fullPage
-    ? 'rounded-[32px] border border-white/70 bg-white/90 p-4 shadow-lg shadow-rose-100/40 sm:p-6'
-    : 'rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-lg shadow-rose-100/40'
+    ? 'rounded-xl border border-white/70 bg-white/90 p-4 shadow-md shadow-rose-100/30'
+    : 'rounded-xl border border-white/70 bg-white/90 p-4 shadow-md shadow-rose-100/30'
 
   const messagePanelClass = fullPage
-    ? 'mt-6 h-[420px] overflow-y-auto rounded-[28px] bg-[linear-gradient(180deg,#fff7fb,#f8fafc)] p-4 sm:p-5'
-    : 'mt-6 h-[320px] overflow-y-auto rounded-[28px] bg-[linear-gradient(180deg,#fff7fb,#f8fafc)] p-4'
+    ? 'mt-4 h-[280px] overflow-y-auto rounded-xl bg-[linear-gradient(180deg,#fff7fb,#f8fafc)] p-3'
+    : 'mt-4 h-[320px] overflow-y-auto rounded-xl bg-[linear-gradient(180deg,#fff7fb,#f8fafc)] p-4'
 
   return (
     <section className={containerClass}>
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-sm font-medium text-slate-500">Support</p>
-          <h3 className="mt-2 text-xl font-semibold text-slate-900">Chat with MenoBot</h3>
+          <h3 className="mt-1 text-lg font-semibold text-slate-900">Chat with MenoBot</h3>
         </div>
-        <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
+        <span className="rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
           Online
         </span>
       </div>
@@ -53,7 +53,7 @@ function ChatbotCard({ fullPage = false }) {
             key={prompt}
             type="button"
             onClick={() => setInput(prompt)}
-            className="rounded-full border border-rose-100 bg-rose-50 px-3 py-2 text-sm text-rose-700 transition hover:border-rose-200 hover:bg-rose-100"
+            className="rounded-lg border border-rose-100 bg-rose-50 px-3 py-2 text-sm text-rose-700 transition hover:border-rose-200 hover:bg-rose-100"
           >
             {prompt}
           </button>
@@ -61,17 +61,17 @@ function ChatbotCard({ fullPage = false }) {
       </div>
 
       <div className={messagePanelClass}>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`max-w-[88%] rounded-3xl px-4 py-3 text-sm leading-7 shadow-sm sm:px-5 ${
+              className={`max-w-[88%] rounded-xl px-4 py-3 text-sm leading-6 shadow-sm ${
                 message.role === 'user'
-                  ? 'ml-auto bg-slate-900 text-white'
+                  ? 'ml-auto bg-[linear-gradient(135deg,#8f6a8e_0%,#b78faf_55%,#e0b8c8_100%)] text-white'
                   : 'bg-white text-slate-700'
               }`}
             >
-              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] opacity-60">
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] opacity-60">
                 {message.role === 'user' ? 'You' : 'MenoBot'}
               </p>
               <p>{message.content}</p>
@@ -79,8 +79,8 @@ function ChatbotCard({ fullPage = false }) {
           ))}
 
           {isSending ? (
-            <div className="max-w-[88%] rounded-3xl bg-white px-5 py-4 text-sm text-slate-600 shadow-sm">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] opacity-60">MenoBot</p>
+            <div className="max-w-[88%] rounded-xl bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] opacity-60">MenoBot</p>
               <div className="flex items-center gap-2">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-rose-400" />
                 <span className="h-2 w-2 animate-pulse rounded-full bg-rose-300 [animation-delay:150ms]" />
@@ -94,7 +94,7 @@ function ChatbotCard({ fullPage = false }) {
       </div>
 
       {error ? (
-        <div className="mt-4 rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <div className="mt-4 rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-700">
           {error}
         </div>
       ) : null}
@@ -105,12 +105,12 @@ function ChatbotCard({ fullPage = false }) {
           value={input}
           onChange={(event) => setInput(event.target.value)}
           placeholder="Ask about symptoms, cycle changes, meals, or daily wellness..."
-          className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-rose-300"
+          className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-rose-300 focus:bg-white"
         />
         <button
           type="submit"
           disabled={isSending || !input.trim()}
-          className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
+          className="inline-flex items-center justify-center rounded-xl bg-[linear-gradient(135deg,#8f6a8e_0%,#b78faf_55%,#e0b8c8_100%)] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSending ? 'Sending...' : 'Send'}
         </button>

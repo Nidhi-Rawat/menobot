@@ -1,15 +1,17 @@
 const express = require("express");
 const { getRootMessage } = require("../controllers/rootController");
-const { createHealthData, getHealthData } = require("../controllers/dataController");
-const { createChatResponse } = require("../controllers/chatController");
-const { createMealSuggestions } = require("../controllers/mealsController");
+const healthRoutes = require("./healthRoutes");
+const chatRoutes = require("./chatRoutes");
+const mealRoutes = require("./mealRoutes");
+const insightRoutes = require("./insightRoutes");
 
 const router = express.Router();
 
 router.get("/", getRootMessage);
-router.post("/api/data", createHealthData);
-router.get("/api/data", getHealthData);
-router.post("/api/chat", createChatResponse);
-router.post("/api/meals", createMealSuggestions);
+router.use("/api/health", healthRoutes);
+router.use("/api/chat", chatRoutes);
+router.use("/api/meals", mealRoutes);
+router.use("/api/insights", insightRoutes);
+router.use("/api/data", healthRoutes);
 
 module.exports = router;

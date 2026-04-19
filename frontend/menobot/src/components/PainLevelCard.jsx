@@ -28,47 +28,47 @@ function PainLevelCard({ painScore, category, cramps, mood, fatigue, flow }) {
   ]
 
   const badgeClass = {
-    high: 'bg-rose-100 text-rose-700',
-    medium: 'bg-amber-100 text-amber-700',
-    low: 'bg-emerald-100 text-emerald-700',
+    high: 'border-rose-100 bg-rose-100 text-rose-700',
+    medium: 'border-amber-100 bg-amber-100 text-amber-700',
+    low: 'border-emerald-100 bg-emerald-100 text-emerald-700',
   }[painLevel.color]
 
   return (
-    <section className="flex h-full flex-col rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-lg shadow-rose-100/40">
-      <div className="flex items-start justify-between gap-4">
+    <section className="flex h-full flex-col rounded-xl border border-white/70 bg-white/90 p-4 shadow-md shadow-rose-100/30">
+      <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-sm font-medium text-slate-500">Pain profile</p>
-          <h3 className="mt-2 text-xl font-semibold text-slate-900">Symptoms today</h3>
+          <h3 className="mt-1 text-lg font-semibold text-slate-900">Symptoms today</h3>
         </div>
-        <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${badgeClass}`}>
+        <span className={`rounded-lg border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] ${badgeClass}`}>
           {painLevel.level}
         </span>
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl bg-slate-900 px-5 py-5 text-white">
-          <p className="text-sm text-slate-300">Overall pain score</p>
-          <p className="mt-3 text-4xl font-semibold">
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <div className="rounded-xl bg-[linear-gradient(135deg,#8f6a8e_0%,#b78faf_55%,#e0b8c8_100%)] px-4 py-4 text-white">
+          <p className="text-sm text-white/75">Overall pain score</p>
+          <p className="mt-2 text-xl font-semibold">
             {formatScore(painScore)}
-            <span className="text-lg text-slate-400">/10</span>
+            <span className="ml-1 text-sm text-white/70">/10</span>
           </p>
         </div>
-        <div className="rounded-2xl bg-emerald-50 px-5 py-5">
+        <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-4">
           <p className="text-sm text-emerald-700">Wellness score</p>
-          <p className="mt-3 text-4xl font-semibold text-emerald-900">{wellnessScore}/10</p>
+          <p className="mt-2 text-xl font-semibold text-emerald-900">{wellnessScore}/10</p>
         </div>
       </div>
 
-      <div className="mt-6 space-y-4">
+      <div className="mt-4 space-y-3">
         {symptoms.map((symptom) => (
-          <div key={symptom.name}>
+          <div key={symptom.name} className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
             <div className="mb-2 flex items-center justify-between text-sm">
               <span className="font-medium text-slate-700">{symptom.name}</span>
               <span className="text-slate-500">{formatScore(symptom.value)}/10</span>
             </div>
-            <div className="h-2 rounded-full bg-slate-100">
+            <div className="h-2 rounded-full bg-white">
               <div
-                className="h-2 rounded-full bg-[linear-gradient(90deg,#fb7185,#f97316)]"
+                className="h-2 rounded-full bg-[linear-gradient(90deg,#8f6a8e_0%,#b78faf_55%,#e0b8c8_100%)]"
                 style={{ width: `${symptom.value * 10}%` }}
               />
             </div>
@@ -76,13 +76,13 @@ function PainLevelCard({ painScore, category, cramps, mood, fatigue, flow }) {
         ))}
       </div>
 
-      {category && (
-        <div className="mt-auto pt-6">
-          <div className="rounded-2xl bg-rose-50 px-4 py-3 text-sm text-slate-700">
+      {category ? (
+        <div className="mt-auto pt-4">
+          <div className="rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-slate-700">
             <span className="font-medium text-slate-900">Clinical category:</span> {category}
           </div>
         </div>
-      )}
+      ) : null}
     </section>
   )
 }

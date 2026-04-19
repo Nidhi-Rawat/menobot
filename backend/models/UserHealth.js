@@ -10,6 +10,9 @@ const userHealthSchema = new mongoose.Schema(
         type: Number,
       },
     ],
+    cycleLength: {
+      type: Number,
+    },
     cramps: {
       type: Number,
     },
@@ -38,7 +41,7 @@ const userHealthSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: { createdAt: true, updatedAt: false },
+    timestamps: true,
   }
 );
 

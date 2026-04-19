@@ -1,33 +1,33 @@
-const REGION_OPTIONS = ["Indian", "South Indian", "North Indian", "Western"];
-const DIET_TYPE_OPTIONS = ["Veg", "Non-Veg"];
+const REGION_OPTIONS = ["india", "us", "europe"];
+const DIET_TYPE_OPTIONS = ["veg", "nonveg"];
 
 const PHASE_MEAL_LIBRARY = {
   menstrual: [
     {
       name: "Palak dal with jeera rice",
-      region: "Indian",
-      dietType: "Veg",
+      region: "india",
+      dietType: "veg",
       tags: ["iron-rich"],
       reason: "Spinach and lentils are helpful iron-rich choices during the menstrual phase.",
     },
     {
       name: "Ragi dosa with beetroot chutney",
-      region: "South Indian",
-      dietType: "Veg",
+      region: "india",
+      dietType: "veg",
       tags: ["iron-rich"],
       reason: "Ragi and beetroot support iron intake while keeping the meal familiar and comforting.",
     },
     {
       name: "Chicken liver masala with roti",
-      region: "North Indian",
-      dietType: "Non-Veg",
+      region: "india",
+      dietType: "nonveg",
       tags: ["iron-rich"],
       reason: "A stronger iron-rich option when recovery and replenishment feel important.",
     },
     {
       name: "Warm lentil soup with whole grain toast",
-      region: "Western",
-      dietType: "Veg",
+      region: "europe",
+      dietType: "veg",
       tags: ["iron-rich"],
       reason: "A simple iron-focused meal that feels gentle and nourishing.",
     },
@@ -35,29 +35,29 @@ const PHASE_MEAL_LIBRARY = {
   follicular: [
     {
       name: "Paneer salad bowl with herbs",
-      region: "Indian",
-      dietType: "Veg",
+      region: "india",
+      dietType: "veg",
       tags: ["light", "fresh"],
       reason: "Fresh ingredients work well in the follicular phase when energy is building back up.",
     },
     {
       name: "Idli with coconut chutney and sprout salad",
-      region: "South Indian",
-      dietType: "Veg",
+      region: "india",
+      dietType: "veg",
       tags: ["light", "fresh"],
       reason: "A lighter South Indian option with a fresher side to match the phase.",
     },
     {
       name: "Tandoori chicken with cucumber salad",
-      region: "North Indian",
-      dietType: "Non-Veg",
+      region: "india",
+      dietType: "nonveg",
       tags: ["light", "fresh"],
       reason: "Keeps meals clean and fresh without feeling too heavy.",
     },
     {
       name: "Greek yogurt bowl with berries",
-      region: "Western",
-      dietType: "Veg",
+      region: "us",
+      dietType: "veg",
       tags: ["light", "fresh"],
       reason: "A lighter fresh option that fits well during the follicular phase.",
     },
@@ -65,29 +65,29 @@ const PHASE_MEAL_LIBRARY = {
   ovulation: [
     {
       name: "Paneer quinoa bowl with greens",
-      region: "Indian",
-      dietType: "Veg",
+      region: "india",
+      dietType: "veg",
       tags: ["high-protein"],
       reason: "Higher-protein meals can feel especially supportive around ovulation.",
     },
     {
       name: "Egg uttapam with sambar",
-      region: "South Indian",
-      dietType: "Non-Veg",
+      region: "india",
+      dietType: "nonveg",
       tags: ["high-protein"],
       reason: "Adds more protein while keeping the meal regionally familiar.",
     },
     {
       name: "Chicken tikka with sauteed vegetables",
-      region: "North Indian",
-      dietType: "Non-Veg",
+      region: "india",
+      dietType: "nonveg",
       tags: ["high-protein"],
       reason: "A protein-forward option to match the ovulation phase.",
     },
     {
       name: "Grilled salmon with greens",
-      region: "Western",
-      dietType: "Non-Veg",
+      region: "us",
+      dietType: "nonveg",
       tags: ["high-protein"],
       reason: "A clean high-protein meal with lighter sides.",
     },
@@ -95,29 +95,29 @@ const PHASE_MEAL_LIBRARY = {
   luteal: [
     {
       name: "Khichdi with pumpkin seeds",
-      region: "Indian",
-      dietType: "Veg",
+      region: "india",
+      dietType: "veg",
       tags: ["magnesium-rich", "complex-carbs"],
       reason: "Grounding carbs and magnesium-rich ingredients can support the luteal phase well.",
     },
     {
       name: "Vegetable upma with roasted peanuts",
-      region: "South Indian",
-      dietType: "Veg",
+      region: "india",
+      dietType: "veg",
       tags: ["magnesium-rich", "complex-carbs"],
       reason: "Comforting complex carbs with a magnesium-rich boost from peanuts.",
     },
     {
       name: "Egg curry with brown rice",
-      region: "North Indian",
-      dietType: "Non-Veg",
+      region: "india",
+      dietType: "nonveg",
       tags: ["magnesium-rich", "complex-carbs"],
       reason: "A steadier, more grounding meal for luteal energy shifts.",
     },
     {
       name: "Oats with almonds and banana",
-      region: "Western",
-      dietType: "Veg",
+      region: "europe",
+      dietType: "veg",
       tags: ["magnesium-rich", "complex-carbs"],
       reason: "An easy luteal-friendly option with slower carbs and magnesium-rich ingredients.",
     },
@@ -134,27 +134,27 @@ function normalizePainScore(painScore) {
 }
 
 function normalizeRegion(region) {
-  return REGION_OPTIONS.includes(region) ? region : "Indian";
+  return REGION_OPTIONS.includes(region) ? region : "india";
 }
 
 function normalizeDietType(dietType) {
-  return DIET_TYPE_OPTIONS.includes(dietType) ? dietType : "Veg";
+  return DIET_TYPE_OPTIONS.includes(dietType) ? dietType : "veg";
 }
 
 function getPainTagsAndTip(painScore) {
   const normalizedPainScore = normalizePainScore(painScore);
 
-  if (normalizedPainScore > 6) {
+  if (normalizedPainScore >= 7) {
     return {
-      extraTags: ["anti-inflammatory"],
-      tip: "Higher pain days may feel better with anti-inflammatory foods like turmeric, ginger, and warm tea.",
+      extraTags: ["anti-inflammatory", "magnesium-rich"],
+      tip: "Higher pain days may feel better with anti-inflammatory foods, magnesium-rich ingredients, and warm fluids.",
     };
   }
 
   if (normalizedPainScore >= 4) {
     return {
-      extraTags: ["balanced"],
-      tip: "Moderate pain can pair well with balanced, steady meals that are easy to digest.",
+      extraTags: ["balanced", "anti-inflammatory"],
+      tip: "Moderate pain often responds well to steady meals with ginger, turmeric, fiber, and easy protein.",
     };
   }
 
@@ -217,7 +217,7 @@ function getMealSuggestions(phase, painScore, region, dietType) {
       tags: [...new Set([...meal.tags, ...painAdjustment.extraTags])],
       reason: `${meal.reason} ${painAdjustment.tip}`,
     })),
-    nutritionTip: getNutritionTip(phase),
+    nutritionTip: `${getNutritionTip(phase)} ${painAdjustment.tip}`,
   };
 }
 

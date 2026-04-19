@@ -43,22 +43,22 @@ function PainInput() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      <header className="rounded-[32px] border border-white/70 bg-white/90 p-6 shadow-lg shadow-rose-100/40 sm:p-8">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-rose-500">Pain Input</p>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+    <div className="mx-auto flex max-w-4xl flex-col gap-4">
+      <header className="rounded-xl border border-white/70 bg-white/80 p-4 shadow-md shadow-rose-100/30">
+        <p className="text-xs font-medium uppercase tracking-[0.22em] text-rose-500">Pain Input</p>
+        <h1 className="mt-2 text-[2rem] font-semibold tracking-[-0.05em] text-slate-900">
           Log today&apos;s pain level
         </h1>
-        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
           Record your current pain level and last period date so the backend can save your latest entry.
         </p>
       </header>
 
       <form
         onSubmit={handleSubmit}
-        className="rounded-[32px] border border-white/70 bg-white/90 p-6 shadow-lg shadow-rose-100/40 sm:p-8"
+        className="rounded-xl border border-white/70 bg-white/90 p-4 shadow-md shadow-rose-100/30"
       >
-        <div className="grid gap-6">
+        <div className="grid gap-4">
           <label className="block">
             <span className="text-sm font-medium text-slate-700">Last period date</span>
             <input
@@ -67,17 +67,17 @@ function PainInput() {
               value={formData.lastPeriod}
               onChange={handleChange}
               max={new Date().toISOString().split('T')[0]}
-              className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-rose-300 focus:bg-white"
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-rose-300 focus:bg-white"
               required
             />
           </label>
 
-          <div className="rounded-3xl bg-slate-50 px-5 py-5">
+          <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-4">
             <div className="flex items-center justify-between gap-3">
               <label htmlFor="painScore" className="text-sm font-medium text-slate-700">
                 Pain score
               </label>
-              <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-slate-900 shadow-sm">
+              <span className="rounded-lg bg-white px-3 py-1 text-sm font-semibold text-slate-900 shadow-sm">
                 {formData.painScore}/10
               </span>
             </div>
@@ -91,21 +91,21 @@ function PainInput() {
               name="painScore"
               value={formData.painScore}
               onChange={handleChange}
-              className="mt-5 w-full accent-rose-500"
+              className="mt-4 w-full accent-rose-500"
             />
 
-            <div className="mt-2 flex justify-between text-xs uppercase tracking-[0.15em] text-slate-400">
+            <div className="mt-2 flex justify-between text-[11px] uppercase tracking-[0.15em] text-slate-400">
               <span>No pain</span>
               <span>Severe</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 flex justify-end">
+        <div className="mt-4 flex justify-end">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+            className="inline-flex items-center justify-center rounded-xl bg-[linear-gradient(135deg,#8f6a8e_0%,#b78faf_55%,#e0b8c8_100%)] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? 'Saving...' : 'Submit pain data'}
           </button>
@@ -113,13 +113,13 @@ function PainInput() {
       </form>
 
       {successMessage ? (
-        <div className="rounded-[28px] border border-emerald-100 bg-emerald-50 p-5 text-sm text-emerald-700 shadow-lg shadow-emerald-100/40">
+        <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-4 text-sm text-emerald-700 shadow-md shadow-emerald-100/20">
           {successMessage}
         </div>
       ) : null}
 
       {error ? (
-        <div className="rounded-[28px] border border-rose-100 bg-rose-50 p-5 text-sm text-rose-700 shadow-lg shadow-rose-100/40">
+        <div className="rounded-xl border border-rose-100 bg-rose-50 p-4 text-sm text-rose-700 shadow-md shadow-rose-100/20">
           {error}
         </div>
       ) : null}

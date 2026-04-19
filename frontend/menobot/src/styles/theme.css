@@ -1,12 +1,12 @@
 @theme {
-  --font-sans: "Inter", "Segoe UI", sans-serif;
+  --font-sans: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
     color: #0f172a;
-    background: #fff8fb;
+    background: #221e1f;
   }
 
   body {

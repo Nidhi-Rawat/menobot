@@ -33,14 +33,14 @@ function detectPhase(lastPeriodDate, cycles = []) {
   if (cycleDay <= 14) {
     return "Follicular";
   }
-  if (cycleDay <= 17) {
+  if (cycleDay <= 16) {
     return "Ovulation";
   }
   if (cycleDay <= averageCycleLength) {
     return "Luteal";
   }
 
-  return "Late";
+  return "Late Luteal";
 }
 
 module.exports = detectPhase;

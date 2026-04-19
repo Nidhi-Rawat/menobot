@@ -4,17 +4,22 @@ function calculatePain(data) {
   const fatigue = Number(data?.fatigue ?? 0);
   const flow = Number(data?.flow ?? 0);
 
-  const average = (cramps + mood + fatigue + flow) / 4;
-  const painScore = Number(average.toFixed(1));
+  const painScore =
+    0.4 * cramps +
+    0.2 * mood +
+    0.2 * flow +
+    0.2 * fatigue;
+
+  const finalScore = Number((painScore * 2).toFixed(1));
 
   let category = "Low";
-  if (painScore > 6) {
+  if (finalScore > 6) {
     category = "High";
-  } else if (painScore > 3) {
+  } else if (finalScore > 3) {
     category = "Medium";
   }
 
-  return { painScore, category };
+  return { painScore: finalScore, category };
 }
 
 module.exports = calculatePain;
